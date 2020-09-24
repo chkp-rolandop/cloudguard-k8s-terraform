@@ -34,9 +34,3 @@ module "k8s" {
 	cluster_ca_certificate	= "${base64decode(module.akscluster.cluster_ca_certificate)}"
 }
 
-#module "cgcspm" {
-#	source = "./modules/cgspm"
-#	access_id = var.access_id
-#	secret_key = var.secret_key
-#}
-
