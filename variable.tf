@@ -8,3 +8,12 @@ variable "kubernetes_version" {
 
 variable "ssh_key" {
 }
+
+variable "access_id" {
+}
+
+variable "secret_key" {
+}
+
+variable "ou" {
+}

@@ -34,3 +34,21 @@ module "k8s" {
 	cluster_ca_certificate	= "${base64decode(module.akscluster.cluster_ca_certificate)}"
 }
 
+module "cgcspm" {
+	source									= "./modules/cgcspm"
+	access_id								= var.access_id
+	secret_key							= var.secret_key
+	name										= "${module.akscluster.host}"
+	ou											= var.ou
+}
+
+module "helm" {
+	source									=	"./modules/helm"
+	host										=	"${module.akscluster.host}"
+	client_certificate			= "${base64decode(module.akscluster.client_certificate)}"
+	client_key							= "${base64decode(module.akscluster.client_key)}"
+	cluster_ca_certificate	= "${base64decode(module.akscluster.cluster_ca_certificate)}"
+	access_id								= var.access_id
+	secret_key							= var.secret_key
+	clustername							= "${module.cgcspm.clustername}"
+}
