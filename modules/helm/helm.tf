@@ -9,9 +9,9 @@ provider "helm" {
 }
 
 resource "helm_release" "cloudguard" {
-  name							= "redis"
+  name							= "cloudguard"
   chart							= "cp-resource-management"
-	repository				= "https://raw.githubusercontent.com/CheckPointSW/charts/master/repository/"
+	repository				= var.repository
 
 	namespace					= var.namespace
 	create_namespace	= "true"
@@ -27,9 +27,20 @@ resource "helm_release" "cloudguard" {
 		value = var.secret_key
 		type = "string"
   }
+
 	set {
     name  = "clusterID"
-		value = var.clustername
+		value = var.clusterID
 		type = "string"
+  }
+
+	set {
+    name  = "addons.imageUploader.enabled"
+		value = "true"
+  }
+
+	set {
+    name  = "addons.flowLogs.enabled"
+		value = "true"
   }
 }

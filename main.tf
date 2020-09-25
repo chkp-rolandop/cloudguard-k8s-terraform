@@ -38,7 +38,7 @@ module "cgcspm" {
 	source									= "./modules/cgcspm"
 	access_id								= var.access_id
 	secret_key							= var.secret_key
-	name										= "${module.akscluster.host}"
+	name										= "${module.akscluster.kubernetes_cluster_name}"
 	ou											= var.ou
 }
 
@@ -48,7 +48,8 @@ module "helm" {
 	client_certificate			= "${base64decode(module.akscluster.client_certificate)}"
 	client_key							= "${base64decode(module.akscluster.client_key)}"
 	cluster_ca_certificate	= "${base64decode(module.akscluster.cluster_ca_certificate)}"
+	repository							= var.repository
 	access_id								= var.access_id
 	secret_key							= var.secret_key
-	clustername							= "${module.cgcspm.clustername}"
+	clusterID							= "${module.cgcspm.clusterID}"
 }

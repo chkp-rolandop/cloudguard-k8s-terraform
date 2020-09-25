@@ -17,3 +17,7 @@ variable "secret_key" {
 
 variable "ou" {
 }
+
+variable "repository" {
+	default = "https://raw.githubusercontent.com/CheckPointSW/charts/master/repository/"
+}

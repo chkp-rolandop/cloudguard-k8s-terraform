@@ -1,3 +1,3 @@
-output "clustername" {
-	value = dome9_cloudaccount_kubernetes.demo.name
+output "clusterID" {
+	value = dome9_cloudaccount_kubernetes.demo.id
 }
