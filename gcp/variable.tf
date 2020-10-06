@@ -5,10 +5,6 @@ variable "location" {
   default = "us-central1"
 }
 
-variable "credentialsfile" {
-  default = "account.json"
-}
-
 variable "projectname" {
   default = "CloudGuard Lab"
 }

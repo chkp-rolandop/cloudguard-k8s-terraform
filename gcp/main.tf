@@ -6,7 +6,6 @@ terraform {
 }
 
  provider "google" {
-  credentials = file(var.credentialsfile)
   project     = var.projectname
   region      = var.location
 } 
