@@ -1,4 +1,4 @@
-#cloudguard-k8s-terraform for Azure
+# cloudguard-k8s-terraform for Azure
 
 ## Description
 
@@ -12,6 +12,7 @@ This terraform project deploys an AKS cluster with 2 nodes using the terraform a
 ### Optional
 
 There is a terraform block in main.tf that specifies an Azure Storage Container to store the terraform backend.
+This is useful when you plan to make changes to the environment from multiple locations or CI tools.
 To use this block, you need to create a Storage container in Azure and provide the necessary values:
 
     resource_group_name  = "<STORAGE_ACCOUNT_RESOURCE_GROUP>"
