@@ -8,7 +8,7 @@ This terraform project deploys an AKS cluster with 2 nodes using the terraform a
 
 - Authentication into Azure (use Azure CLI or service principal)
 - SSH Key
--
+
 ## Usage
 
 ```bash
