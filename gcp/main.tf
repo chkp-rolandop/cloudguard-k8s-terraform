@@ -1,7 +1,16 @@
 terraform {
+
+  /*
   backend "gcs" {
     bucket = "rolop-terraform-backend"
     prefix = "terraform/state"
+  }
+*/
+  required_providers {
+    dome9 = {
+      source  = "dome9/dome9"
+      version = "~> 1.20.4"
+    }
   }
 }
 
