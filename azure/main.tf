@@ -1,16 +1,22 @@
-#This block specifies using an Azure Storage container to store Terraform state files
-#This block can be removed or commented out if you want to store files locally
-#for more info visit https://www.terraform.io/docs/backends/types/azurerm.html
-/*
 terraform {
+  #This block specifies using an Azure Storage container to store Terraform state files
+  #This block can be removed or commented out if you want to store files locally
+  #for more info visit https://www.terraform.io/docs/backends/types/azurerm.html
+  /*
   backend "azurerm" {
     resource_group_name  = "terraformrg"
     storage_account_name = "cgtfk8sbackendsa"
     container_name       = "tfbackend-files"
     key                  = "prod.terraform.tfstate"
   }
-}
 */
+  required_providers {
+    dome9 = {
+      source  = "dome9/dome9"
+      version = "~> 1.20.4"
+    }
+  }
+}
 provider "azurerm" {
   features {}
 
