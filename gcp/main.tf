@@ -1,44 +1,40 @@
 terraform {
   backend "gcs" {
-    bucket  = var.tf-state-backend-bucket
-    prefix  = "terraform/state"
+    bucket = "rolop-terraform-backend"
+    prefix = "terraform/state"
   }
 }
 
- provider "google" {
-  project     = var.projectname
-  region      = var.location
-} 
+provider "google" {
+  project = var.projectid
+  region  = var.location
+}
 
 module "gkecluster" {
-  source             = "./modules/gkecluster"
-  ssh_key            = var.ssh_key
-  location           = var.location
-  min_master_version = var.kubernetes_version
+  source   = "./modules/gkecluster"
+  location = var.location
 }
 
 module "k8s" {
   source                 = "./modules/k8s"
-  host                   = "${module.akscluster.host}"
-  client_certificate     = "${base64decode(module.akscluster.client_certificate)}"
-  client_key             = "${base64decode(module.akscluster.client_key)}"
-  cluster_ca_certificate = "${base64decode(module.akscluster.cluster_ca_certificate)}"
+  host                   = "https://${module.gkecluster.kubernetes_cluster_endpoint}"
+  access_token           = "${module.gkecluster.access_token}"
+  cluster_ca_certificate = "${base64decode(module.gkecluster.cluster_ca_certificate)}"
 }
 
 module "cgcspm" {
   source     = "./modules/cgcspm"
   access_id  = var.access_id
   secret_key = var.secret_key
-  name       = "${module.akscluster.kubernetes_cluster_name}"
+  name       = "${module.gkecluster.kubernetes_cluster_name}"
   ou         = var.ou
 }
 
 module "helm" {
   source                 = "./modules/helm"
-  host                   = "${module.akscluster.host}"
-  client_certificate     = "${base64decode(module.akscluster.client_certificate)}"
-  client_key             = "${base64decode(module.akscluster.client_key)}"
-  cluster_ca_certificate = "${base64decode(module.akscluster.cluster_ca_certificate)}"
+  host                   = "https://${module.gkecluster.kubernetes_cluster_endpoint}"
+  access_token           = "${module.gkecluster.access_token}"
+  cluster_ca_certificate = "${base64decode(module.gkecluster.cluster_ca_certificate)}"
   repository             = var.repository
   access_id              = var.access_id
   secret_key             = var.secret_key

@@ -1,19 +1,8 @@
-variable "tf-state-backend-bucket" {
-}
-
 variable "location" {
-  default = "us-central1"
+  default = "us-east1"
 }
 
-variable "projectname" {
-  default = "CloudGuard Lab"
-}
-
-variable "kubernetes_version" {
-  default = "1.18.8"
-}
-
-variable "ssh_key" {
+variable "projectid" {
 }
 
 variable "access_id" {

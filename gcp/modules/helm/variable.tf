@@ -1,10 +1,7 @@
 variable "host" {
 }
 
-variable "client_certificate" {
-}
-
-variable "client_key" {
+variable access_token {
 }
 
 variable "cluster_ca_certificate" {
@@ -20,9 +17,9 @@ variable "clusterID" {
 }
 
 variable "namespace" {
-	default = "checkpoint"
+  default = "checkpoint"
 }
 
 variable "repository" {
-	default = "https://raw.githubusercontent.com/CheckPointSW/charts/master/repository/"
+  default = "https://raw.githubusercontent.com/CheckPointSW/charts/master/repository/"
 }
