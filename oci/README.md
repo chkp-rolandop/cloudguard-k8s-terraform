@@ -23,7 +23,7 @@ The following variables should be set:
 ```
 Then run: 
 
-	```bash 
+```bash 
 	terraform init
 	terraform apply
-	```
+```
