@@ -21,3 +21,8 @@ The following variables should be set:
 	export TF_VAR_ssh_private_key_path=~/.ssh/id_rsa
 	export TF_VAR_ssh_public_key_path=~/.ssh/id_rsa.pub
 ```
+Then run: ```bash 
+	
+	terraform init
+	terraform apply
+	```
