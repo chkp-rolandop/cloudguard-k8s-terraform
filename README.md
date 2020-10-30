@@ -7,6 +7,7 @@ This terraform project will build a kubernetes cluster in a public cloud environ
 ### Current Cloud Providers
 - Azure
 - GCP
+- OCI
 
 ### TODO:
-- add AWS
+- finish AWS
