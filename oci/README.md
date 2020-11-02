@@ -6,7 +6,7 @@
 - oci-cli: https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
 - (Optional) Terraform Backend Storage: https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/terraformUsingObjectStore.htm
 	- uncomment terraform block in main.tf
-- CloudGuard CSPM API Key
+- CloudGuard CSPM API Key: https://secure.dome9.com
 
 The following variables should be set:
 ```bash
