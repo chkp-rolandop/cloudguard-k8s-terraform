@@ -20,39 +20,90 @@ terraform {
     }
   }
 }
+
 provider "aws" {
   region = var.location
 }
 
-module "akscluster" {
-  source             = "./modules/ekscluster"
-  ssh_key            = var.ssh_key
-  location           = var.location
-  kubernetes_version = var.kubernetes_version
+resource "random_pet" "prefix" {
+}
+
+data "aws_eks_cluster" "cluster" {
+  name = module.ekscluster.cluster_id
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.ekscluster.cluster_id
+}
+
+module "ekscluster" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "13.2.1"
+
+  cluster_name    = random_pet.prefix.id
+  cluster_version = "1.19.0"
+  subnets         = module.eksvpc.private_subnets
+
+  tags          = {
+    Environment = "Demo"
+  }
+
+  vpc_id = module.eksvpc.vpc_id
+
+  worker_groups = [
+    {
+      instance_type = "m4.large"
+      asg_max_size  = 5
+    }
+  ]
+}
+
+module "eksvpc" {
+  source = "terraform-aws-modules/vpc/aws"
+  versin = "2.64.0"
+
+  name            = "${random_pet.prefix.id}-vpc"
+  cidr            = "10.0.0.0/16"
+  azs             = data.aws_availability_zones.available.names
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
+  enable_dns_hostnames = true
+
+  public_subnet_tags                              = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                      = "1"
+  }
+
+  private_subnet_tags                             = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"             = "1"
+  }
 }
 
 module "k8s" {
   source                 = "./modules/k8s"
-  host                   = "${module.akscluster.host}"
-  client_certificate     = "${base64decode(module.akscluster.client_certificate)}"
-  client_key             = "${base64decode(module.akscluster.client_key)}"
-  cluster_ca_certificate = "${base64decode(module.akscluster.cluster_ca_certificate)}"
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  token                  = data.aws_eks_cluster_auth.cluster.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekscluster.certificate_authority.0.data)
 }
 
 module "cgcspm" {
   source     = "./modules/cgcspm"
   access_id  = var.access_id
   secret_key = var.secret_key
-  name       = "${module.akscluster.kubernetes_cluster_name}"
+  name       = "${module.ekscluster.kubernetes_cluster_name}"
   ou         = var.ou
 }
 
 module "helm" {
   source                 = "./modules/helm"
-  host                   = "${module.akscluster.host}"
-  client_certificate     = "${base64decode(module.akscluster.client_certificate)}"
-  client_key             = "${base64decode(module.akscluster.client_key)}"
-  cluster_ca_certificate = "${base64decode(module.akscluster.cluster_ca_certificate)}"
+  host                   = "${module.ekscluster.host}"
+  client_certificate     = "${base64decode(module.ekscluster.client_certificate)}"
+  client_key             = "${base64decode(module.ekscluster.client_key)}"
+  cluster_ca_certificate = "${base64decode(module.ekscluster.cluster_ca_certificate)}"
   repository             = var.repository
   access_id              = var.access_id
   secret_key             = var.secret_key
