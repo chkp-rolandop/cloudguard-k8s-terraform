@@ -25,12 +25,17 @@ resource "helm_release" "cloudguard" {
   }
 
   set {
-    name  = "addons.imageUploader.enabled"
+    name  = "addons.flowLogs.enabled"
     value = "true"
   }
 
   set {
-    name  = "addons.flowLogs.enabled"
-    value = "true"
+    name  = "imageRegistry.user"
+    value = "checkpoint+consec_read"
+  }
+
+  set {
+    name  = "imageRegistry.password"
+    value = "V08FPKKJSHP8YJYLE571MMLAHPOSPX1ASFBI4P875L4ZNQWEXUCEU0V4ASWCZVAZ"
   }
 }
