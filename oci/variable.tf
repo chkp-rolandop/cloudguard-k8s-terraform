@@ -35,7 +35,7 @@ variable "ssh_public_key_path" {
 }
 
 variable "kubernetes_version" {
-  default = "v1.16.8"
+  default = "v1.17.13"
 }
 
 variable "repository" {
