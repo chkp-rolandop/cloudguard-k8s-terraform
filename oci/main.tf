@@ -1,7 +1,13 @@
 terraform {
   backend "http" {
-    address       = "[PATH_TO_STORAGE_OBJECT_TERRAFORM.TFSTATE]"
+    address       = "[ADD YOUR OBJECT STORAGE HERE]"
     update_method = "PUT"
+  }
+
+  required_providers {
+    kubernetes = { version = "1.13.3" }
+    helm       = { version = "1.3.2" }
+    oci        = { version = "3.97.0" }
   }
 }
 
