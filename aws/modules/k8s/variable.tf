@@ -1,10 +1,7 @@
 variable "host" {
 }
 
-variable "client_certificate" {
-}
-
-variable "client_key" {
+variable "access_token" {
 }
 
 variable "cluster_ca_certificate" {
