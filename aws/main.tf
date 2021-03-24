@@ -60,7 +60,7 @@ module "ekscluster" {
 
 module "eksvpc" {
   source = "terraform-aws-modules/vpc/aws"
-  versin = "2.64.0"
+  version = "2.64.0"
 
   name            = "${random_pet.prefix.id}-vpc"
   cidr            = "10.0.0.0/16"
