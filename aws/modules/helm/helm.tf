@@ -10,7 +10,7 @@ provider "helm" {
 
 resource "helm_release" "cloudguard" {
   name							= "cloudguard"
-  chart							= "cp-resource-management"
+  chart							= "cloudguard"
 	repository				= var.repository
 
 	namespace					= var.namespace
@@ -18,13 +18,13 @@ resource "helm_release" "cloudguard" {
 
 	set {
     name  = "credentials.user"
-    value = var.access_id
+    value = var.service_account_access_id
 		type = "string"
   }
 
 	set {
     name  = "credentials.secret"
-		value = var.secret_key
+		value = var.service_account_secret_key
 		type = "string"
   }
 
@@ -42,5 +42,30 @@ resource "helm_release" "cloudguard" {
 	set {
     name  = "addons.flowLogs.enabled"
 		value = "true"
+  }
+
+  set {
+    name  = "addons.imageScan.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "addons.runtimeProtection.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "addons.admissionControl.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "imageRegistry.user"
+    value = var.imageRegistryuser
+  }
+
+  set {
+    name  = "imageRegistry.password"
+    value = var.imageRegistrypassword
   }
 }
