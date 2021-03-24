@@ -1,5 +1,5 @@
 terraform {
-  #This block specifies using an Azure Storage container to store Terraform state files
+  #This block specifies using an S3 Bucket to store Terraform state files
   #This block can be removed or commented out if you want to store files locally
   #for more info visit https://www.terraform.io/docs/backends/types/azurerm.html
   /*
