@@ -99,13 +99,15 @@ module "cgcspm" {
 }
 
 module "helm" {
-  source                 = "./modules/helm"
-  host                   = "${module.ekscluster.host}"
-  client_certificate     = "${base64decode(module.ekscluster.client_certificate)}"
-  client_key             = "${base64decode(module.ekscluster.client_key)}"
-  cluster_ca_certificate = "${base64decode(module.ekscluster.cluster_ca_certificate)}"
-  repository             = var.repository
-  access_id              = var.access_id
-  secret_key             = var.secret_key
-  clusterID              = "${module.cgcspm.clusterID}"
+  source                     = "./modules/helm"
+  host                       = "${module.ekscluster.host}"
+  client_certificate         = "${base64decode(module.ekscluster.client_certificate)}"
+  client_key                 = "${base64decode(module.ekscluster.client_key)}"
+  cluster_ca_certificate     = "${base64decode(module.ekscluster.cluster_ca_certificate)}"
+  repository                 = var.repository
+  access_id                  = var.access_id
+  secret_key                 = var.secret_key
+  service_account_access_key = var.service_account_access_key
+  service_account_secret_key = var.service_account_secret_key
+  clusterID                  = "${module.cgcspm.clusterID}"
 }
