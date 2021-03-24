@@ -86,7 +86,7 @@ module "eksvpc" {
 module "k8s" {
   source                 = "./modules/k8s"
   host                   = data.aws_eks_cluster.cluster.endpoint
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  access_token                  = data.aws_eks_cluster_auth.cluster.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekscluster.certificate_authority.0.data)
 }
 
