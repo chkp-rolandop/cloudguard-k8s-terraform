@@ -94,7 +94,7 @@ module "cgcspm" {
   source     = "./modules/cgcspm"
   access_id  = var.access_id
   secret_key = var.secret_key
-  name       = "${module.ekscluster.kubernetes_cluster_name}"
+  name       = data.aws_eks_cluster.cluster.endpoint
   ou         = var.ou
 }
 
