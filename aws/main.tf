@@ -100,10 +100,9 @@ module "cgcspm" {
 
 module "helm" {
   source                     = "./modules/helm"
-  host                       = "${module.ekscluster.host}"
-  client_certificate         = "${base64decode(module.ekscluster.client_certificate)}"
-  client_key                 = "${base64decode(module.ekscluster.client_key)}"
-  cluster_ca_certificate     = "${base64decode(module.ekscluster.cluster_ca_certificate)}"
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  access_token                  = data.aws_eks_cluster_auth.cluster.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekscluster.certificate_authority.0.data)
   repository                 = var.repository
   service_account_access_id = var.service_account_access_id
   service_account_secret_key = var.service_account_secret_key
