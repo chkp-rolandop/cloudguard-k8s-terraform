@@ -19,11 +19,11 @@ terraform {
       version = "~> 1.20.4"
     }
     helm      = {
-      source  = "hashicorp/terraform-provider-helm"
+      source  = "hashicorp/helm"
       version = "~>2.0.3"
     }
     kubernetes = {
-      source   = "hashicorp/terraform-provider-kubernetes"
+      source   = "hashicorp/kubernetes"
       version  = "~>2.0.3"
     }
   }
