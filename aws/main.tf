@@ -122,5 +122,5 @@ module "helm" {
   service_account_access_id = var.service_account_access_id
   service_account_secret_key = var.service_account_secret_key
   imageRegistrypassword      = var.imageRegistrypassword
-  clusterID                  = "${module.cgcspm.clusterID}"
+  clusterID                  = module.cgcspm.clusterID
 }
