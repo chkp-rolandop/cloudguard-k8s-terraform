@@ -56,7 +56,7 @@ module "ekscluster" {
   version = "13.2.1"
 
   cluster_name    = local.cluster_name
-  cluster_version = "1.19.0"
+  cluster_version = "1.19"
   subnets         = module.eksvpc.private_subnets
 
   tags          = {
