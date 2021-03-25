@@ -28,6 +28,10 @@ provider "aws" {
 resource "random_pet" "prefix" {
 }
 
+locals {
+  cluster_name = "${random_pet.prefix.id}-cg-eks"
+}
+
 data "aws_availability_zones" "available" {
 }
 
@@ -43,7 +47,7 @@ module "ekscluster" {
   source  = "terraform-aws-modules/eks/aws"
   version = "13.2.1"
 
-  cluster_name    = random_pet.prefix.id
+  cluster_name    = local.cluster_name
   cluster_version = "1.19.0"
   subnets         = module.eksvpc.private_subnets
 
@@ -90,7 +94,7 @@ module "k8s" {
   source                 = "./modules/k8s"
   host                   = data.aws_eks_cluster.cluster.endpoint
   access_token                  = data.aws_eks_cluster_auth.cluster.token
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekscluster.certificate_authority.0.data)
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
 }
 
 module "cgcspm" {
@@ -105,7 +109,7 @@ module "helm" {
   source                     = "./modules/helm"
   host                   = data.aws_eks_cluster.cluster.endpoint
   access_token                  = data.aws_eks_cluster_auth.cluster.token
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.ekscluster.certificate_authority.0.data)
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   repository                 = var.repository
   service_account_access_id = var.service_account_access_id
   service_account_secret_key = var.service_account_secret_key
