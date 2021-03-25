@@ -18,6 +18,14 @@ terraform {
       source  = "dome9/dome9"
       version = "~> 1.20.4"
     }
+    helm      = {
+      source  = "hashicorp/terraform-provider-helm"
+      version = "~>2.0.3"
+    }
+    kubernetes = {
+      source   = "hashicorp/terraform-provider-kubernetes"
+      version  = "~>2.0.3"
+    }
   }
 }
 
