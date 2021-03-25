@@ -2,7 +2,7 @@ provider "kubernetes" {
 	host                   = var.host
 	token                  = var.access_token
 	cluster_ca_certificate = var.cluster_ca_certificate
-  version                = "~> 1.11"
+  version                = "~> 2.0.3"
 }
 
 resource "kubernetes_deployment" "example" {
