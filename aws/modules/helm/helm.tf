@@ -1,8 +1,7 @@
 provider "helm" {
   kubernetes {
-		load_config_file       = "false"
 		host                   = var.host
-    access_token           = var.access_token
+    token           = var.access_token
 		cluster_ca_certificate = var.cluster_ca_certificate
   }
 }
