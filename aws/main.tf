@@ -28,6 +28,9 @@ provider "aws" {
 resource "random_pet" "prefix" {
 }
 
+data "aws_availability_zones" "available" {
+}
+
 data "aws_eks_cluster" "cluster" {
   name = module.ekscluster.cluster_id
 }
