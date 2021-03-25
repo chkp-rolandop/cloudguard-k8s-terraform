@@ -1,5 +1,4 @@
 provider "kubernetes" {
-	load_config_file				=	"false"
 	host										= var.host
 	token							= var.access_token
 	cluster_ca_certificate	= var.cluster_ca_certificate
